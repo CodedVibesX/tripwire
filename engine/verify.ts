@@ -44,6 +44,9 @@ export function verify(s: Scenario): Verdict {
   const probe = s.proofGuard.probe
     ? s.proofGuard.probe(buggy)
     : { expected: "", received: "" };
+  const probeFix = s.proofGuard.probe
+    ? s.proofGuard.probe(candidate)
+    : { expected: "", received: "" };
 
   // 3. Regression guards: behaviour that must not break.
   const regressionsGreenOnCandidate = s.regressionGuards.every((t) => passes(candidate, t));
@@ -165,6 +168,7 @@ export function verify(s: Scenario): Verdict {
       assertionLine,
       expected: probe.expected,
       receivedOnBuggy: probe.received,
+      receivedOnFix: probeFix.received,
       redOnBug: proofRedOnBug,
       greenOnFix: proofGreenOnFix,
     },

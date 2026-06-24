@@ -64,6 +64,7 @@ export interface Verdict {
     assertionLine: string;
     expected: string;
     receivedOnBuggy: string;
+    receivedOnFix: string;
     redOnBug: boolean; // guard fails on the buggy code (reproduction confirmed)
     greenOnFix: boolean; // guard passes on the candidate (headline fixed)
   };

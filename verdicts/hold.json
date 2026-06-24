@@ -44,6 +44,7 @@
     "assertionLine": "expect(cartTotal(cart)).toBe($19.19)",
     "expected": "$19.19",
     "receivedOnBuggy": "$19.20",
+    "receivedOnFix": "$19.18",
     "redOnBug": true,
     "greenOnFix": false
   },
@@ -85,5 +86,5 @@
     "survivors": []
   },
   "existingTestCount": 3,
-  "generatedAt": "2026-06-24T03:22:20.004Z"
+  "generatedAt": "2026-06-24T03:31:12.320Z"
 }
