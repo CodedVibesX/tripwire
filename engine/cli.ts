@@ -24,7 +24,7 @@ mkdirSync(outDir, { recursive: true });
 let failed = false;
 const pad = (s: string, n: number) => (s + " ".repeat(n)).slice(0, n);
 
-console.log("\n  Tripwire — regenerating verdicts from real execution\n");
+console.log("\n  Tripwire: regenerating verdicts from real execution\n");
 for (const scenario of SCENARIOS) {
   const v = verify(scenario);
   if (!check) {

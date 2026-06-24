@@ -5,10 +5,14 @@ test suite, because a patch that passes every test can still be wrong. Instead i
 manufactures the discriminating test the suite never had, runs it, and decides
 **ship / hold / reject** on a confidence that is honest about when it does not know.
 
-One screen, one decision, one proof. Run `npm run dev` to see the verdict card: a
-SHIP reads green with the guard's value resolved to the expected total, a HOLD
-reads amber with the guard still red on the patch, and the single animation on the
-page is that one assertion line resolving.
+One screen, one decision, one proof:
+
+![Tripwire verdict card, a SHIP decision](docs/ship.png)
+
+The knockout is the same card on a patch that passes every existing test but is
+still wrong. The guard Tripwire wrote catches it, so the decision is HOLD:
+
+![Tripwire verdict card, a HOLD decision](docs/hold.png)
 
 ## Why
 

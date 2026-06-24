@@ -110,7 +110,7 @@ export default function Page() {
               {v.confidenceFactors.map((f, i) => (
                 <li key={i}>
                   <span>
-                    {f.label} — {f.note}
+                    {f.label}: {f.note}
                   </span>
                   <span className={`v ${f.delta >= 0 ? "pos" : "neg"}`}>
                     {f.delta >= 0 ? "+" : ""}
