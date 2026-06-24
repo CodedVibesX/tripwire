@@ -1,0 +1,95 @@
+{
+  "id": "reject",
+  "title": "Breaks bulk carts",
+  "incident": "Checkout total is off by a cent on multi-item carts",
+  "file": "src/cart/pricing.ts",
+  "line": 14,
+  "rootCause": "The 5% loyalty discount is floored on each line, so a fractional cent is dropped per line and the error compounds as the cart grows.",
+  "diff": [
+    "- return items.reduce((s, line) => s + (line - Math.floor(line / 20)), 0);",
+    "+ const sub = items.reduce((s, line) => s + line, 0);",
+    "+ let total = sub - Math.floor(sub / 20);",
+    "+ if (items.length > 5) total = total - Math.floor(sub / 20);",
+    "+ return total;"
+  ],
+  "decision": "REJECT",
+  "reason": "The patch fixes the reported bug, but a regression guard now fails (bulk cart 6 x $10.00 = $57.00): it breaks adjacent behaviour.",
+  "confidence": 0.42,
+  "confidenceFactors": [
+    {
+      "label": "reproduction confirmed",
+      "delta": 0.12,
+      "note": "the guard fails on the buggy code"
+    },
+    {
+      "label": "guard discriminates",
+      "delta": 0.12,
+      "note": "the guard passes on the patch"
+    },
+    {
+      "label": "regressions hold",
+      "delta": -0.3,
+      "note": "a regression guard broke"
+    },
+    {
+      "label": "mutation coverage",
+      "delta": 0.15,
+      "note": "the guard suite killed 6 of 8 mutants"
+    },
+    {
+      "label": "blast radius",
+      "delta": -0.075,
+      "note": "5 changed lines"
+    }
+  ],
+  "guard": {
+    "source": "test('multi-item cart keeps every cent', () => {\n  expect(cartTotal([1010, 1010])).toBe(1919) // $19.19\n})",
+    "assertionLine": "expect(cartTotal(cart)).toBe($19.19)",
+    "expected": "$19.19",
+    "receivedOnBuggy": "$19.20",
+    "redOnBug": true,
+    "greenOnFix": true
+  },
+  "signals": [
+    {
+      "label": "existing suite green on the bug",
+      "value": "yes (the trap)",
+      "ok": true
+    },
+    {
+      "label": "existing suite green on the patch",
+      "value": "yes",
+      "ok": true
+    },
+    {
+      "label": "guard red on the bug",
+      "value": "yes",
+      "ok": true
+    },
+    {
+      "label": "guard green on the patch",
+      "value": "yes",
+      "ok": true
+    },
+    {
+      "label": "regression guards hold",
+      "value": "no",
+      "ok": false
+    },
+    {
+      "label": "mutation kill-rate",
+      "value": "6/8",
+      "ok": true
+    }
+  ],
+  "mutation": {
+    "total": 8,
+    "killed": 6,
+    "survivors": [
+      "floor -> ceil",
+      "floor -> round"
+    ]
+  },
+  "existingTestCount": 3,
+  "generatedAt": "2026-06-24T03:22:20.005Z"
+}

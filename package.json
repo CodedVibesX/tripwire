@@ -1,0 +1,16 @@
+{
+  "name": "tripwire",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A safe-to-ship gate for autonomous code fixes: it manufactures the discriminating test the suite never had, runs it, and decides ship / hold / reject.",
+  "scripts": {
+    "verdict": "tsx engine/cli.ts",
+    "verdict:check": "tsx engine/cli.ts --check"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}
